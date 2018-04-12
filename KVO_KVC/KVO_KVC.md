@@ -150,3 +150,6 @@ static void KVO_setter(id self, SEL _cmd, id newValue){
 对于基本类型的监听，苹果可能是通过void *类型对对象进行桥接转换，然后直接获取内存，通过type encoding我们可以获取所有setter对象的具体类型，虽然实现比较麻烦，但是确实能够达成类似的效果。
 钻研kvo的实现可以让我们对苹果的代码实现有更深层次的了解，这些知识涉及到了更深层次的技术，探究它们对我们的开发视野有着很重要的作用。同时，对比其他的回调方式，KVO的实现在创建子类、重写方法等等方面的内存消耗是很巨大的，因此博主更加推荐使用delegate、block等回调方式，甚至直接使用method-swizzling来替换这种重写setter方式也是可行的。
 ps:昨天有人问我说为什么kvo不直接通过重写setter方法的方式来进行回调，而要创建一个中间类。诚然，method_swizzling是一个很赞的机制，完全能用它来满足监听需求。但是，如果我们要监听的对象是tableView呢？正常而言，一款应用中远不止一个列表，使用method_swizzling会导致所有的列表都添加了监听回调，先不考虑这可能导致的崩溃风险，所有继承自tableView的视图（包括自身）的setter都受到了影响。而使用中间类却避免了这个问题
+
+
+另外备注下［self class］和object_getClass(self)可是不一样的，具体什么不一样参考：http://stackoverflow.com/questions/15906130/object-getclassobj-and-obj-class-give-different-results（一个返回的是类，一个是实例，能一样吗？）
