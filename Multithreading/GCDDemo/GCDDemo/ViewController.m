@@ -7,6 +7,8 @@
 //
 
 #import "ViewController.h"
+#import "CustomView.h"
+#import "GCDDemo-Swift.h"
 
 @interface ViewController ()
 
@@ -17,6 +19,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
+    [self _addButton];
     [self _setGCD];
     
      // 4.1 同步执行 + 并发队列
@@ -60,7 +63,12 @@
 //    [self groupWait];
     
     // 6.5.3 dispatch_group_enter、dispatch_group_leave
-    [self groupEnterAndLeave];
+//    [self groupEnterAndLeave];
+    
+//    [self _viewLayerTest];
+    
+    // 快慢路径的问题
+    [self _fastPathSlowPathWithNum];
 }
 
 - (void)_setGCD{
@@ -551,7 +559,53 @@
 //        NSLog(@"group---end");
 }
 
+- (void)_viewLayerTest{
+    
+    CustomView *view = [[CustomView alloc] initWithFrame:CGRectMake(10, 20, 30, 40)];
+    [self.view addSubview:view];
+    
+}
 
+- (void)_fastPathSlowPathWithNum{
+    
+    int num = 12;
+    
+    NSLog(@"0l的值-->%ld", 0l);
+    NSLog(@"~0l的值-->%ld", ~0l);
+    NSLog(@"-->%ld", DISPATCH_EXPECT(num, 0));
+    NSLog(@"-->%ld", __builtin_expect(num, 0));
+    
+    if (DISPATCH_EXPECT(num, 12)) {
+        NSLog(@"-->%@", @"DISPATCH_EXPECT-1");
+    }else{
+        NSLog(@"-->%@", @"DISPATCH_EXPECT-2");
+    }
+    
+    if (__builtin_expect(num, 0))
+        NSLog(@"-->%@", @"__builtin_expect-1");
+    else
+        NSLog(@"-->%@", @"__builtin_expect-2");
+}
+
+
+- (void)_addButton {
+    UIButton *bt = [UIButton buttonWithType:UIButtonTypeCustom];
+    bt.frame = CGRectMake(100, 120, 100, 50);
+    bt.backgroundColor = [UIColor orangeColor];
+    [bt setTitle:@"下一页" forState:UIControlStateNormal];
+    [bt setTitle:@"下一页" forState:UIControlStateHighlighted];
+    [bt setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
+    [bt setTitleColor:[UIColor redColor] forState:UIControlStateHighlighted];
+    [bt addTarget:self action:@selector(_pushToNextViewController) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:bt];
+}
+
+- (void)_pushToNextViewController {
+    
+    GCDDataRaceViewController *vc = [[GCDDataRaceViewController alloc] init];
+    [self.navigationController pushViewController:vc animated:YES];
+    
+}
 
 
 

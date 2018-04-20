@@ -1,5 +1,115 @@
 # 一、简介
 
+## 首先提出一些问题:
+
+- 1.dispatch_async 函数如何实现，分发到主队列和全局队列有什么区别，一定会新建线程执行任务么？
+- 2.dispatch_sync 函数如何实现，为什么说 GCD 死锁是队列导致的而不是线程，死锁不是操作系统的概念么？
+- 3.信号量是如何实现的，有哪些使用场景？
+- 4.dispatch_group 的等待与通知、dispatch_once 如何实现？
+- 5.dispatch_source 用来做定时器如何实现，有什么优点和用途？
+- 6.dispatch_suspend 和 dispatch_resume 如何实现，队列的的暂停和计时器的暂停有区别么？
+
+```
+#define DISPATCH_DECL(name) typedef struct name##_s *name##_t
+```
+比如说非常常见的 DISPATCH_DECL(dispatch_queue);，它的展开形式是:
+
+```
+typedef struct dispatch_queue_s *dispatch_queue_t;
+```
+
+这行代码定义了一个 dispatch_queue_t 类型的指针，指向一个 dispatch_queue_s 类型的结构体。
+
+## TSD
+
+TSD(Thread-Specific Data) 表示线程私有数据。在 C++ 中，全局变量可以被所有线程访问，局部变量只有函数内部可以访问。而 TSD 的作用就是能够在同一个线程的不同函数中被访问。在不同线程中，虽然名字相同，但是获取到的数据随线程不同而不同。
+通常，我们可以利用 POSIX 库提供的 API 来实现 TSD:
+
+```
+int pthread_key_create(pthread_key_t *key, void (*destr_function) (void *))
+
+```
+这个函数用来创建一个 key，在线程退出时会将 key 对应的数据传入 destr_function 函数中进行清理。
+
+我们分别使用 get/set 方法来访问/修改 key 对应的数据:
+
+```
+int  pthread_setspecific(pthread_key_t  key,  const   void  *pointer)
+
+void * pthread_getspecific(pthread_key_t key)
+```
+
+在 GCD 中定义了六个 key，根据名字大概能猜出各自的含义:
+
+```
+pthread_key_t dispatch_queue_key;
+
+pthread_key_t dispatch_sema4_key;
+
+pthread_key_t dispatch_cache_key;
+
+pthread_key_t dispatch_io_key;
+
+pthread_key_t dispatch_apply_key;
+
+pthread_key_t dispatch_bcounter_key;
+```
+
+## fastpath && slowpath
+
+这是定义在 internal.h 中的两个宏:
+
+```
+#define fastpath(x) ((typeof(x))__builtin_expect((long)(x), ~0l))
+
+#define slowpath(x) ((typeof(x))__builtin_expect((long)(x), 0l))
+```
+
+为了理解所谓的快路径和慢路径，我们需要先学习一点计算机基础知识。比如这段非常简单的代码:
+
+```
+if (x)
+    return 1;
+else
+    return 39;
+```
+
+由于计算机并非一次只读取一条指令，而是读取多条指令，所以在读到 if 语句时也会把 return 1 读取进来。如果 x 为 0，那么会重新读取 return 39，重读指令相对来说比较耗时。
+
+如过 x 有非常大的概率是 0，那么 return 1 这条指令每次不可避免的会被读取，并且实际上几乎没有机会执行， 造成了不必要的指令重读。当然，最简单的优化就是:
+
+```
+if (!x)
+    return 39;
+else
+    return 1;
+```
+
+然而对程序员来说，每次都做这样的判断非常烧脑，而且容易出错。于是 GCC 提供了一个内置函数 `__builtin_expect`:
+
+```
+long __builtin_expect (long EXP, long C)
+```
+
+它的返回值就是整个函数的返回值，参数 C 代表预计的值，表示程序员知道 EXP 的值很可能就是 C。比如上文中的例子可以这样写:
+
+```
+if (__builtin_expect(x, 0))
+    return 1;
+else
+    return 39;
+```
+
+虽然写法逻辑不变，但是编译器会把汇编代码优化成 if(!x) 的形式。
+
+因此，在苹果定义的两个宏中，fastpath(x) 依然返回 x，只是告诉编译器 x 的值一般不为 0，从而编译器可以进行优化。同理，slowpath(x) 表示 x 的值很可能为 0，希望编译器进行优化。
+
+![](https://images2015.cnblogs.com/blog/708266/201609/708266-20160905081233613-27028364.jpg)
+
+
+
+
+
 ## 概念
 Grand Central Dispatch 是Apple开发的一个多核编程的较新的的解决办法，它主要用于优化应用程序以支持多核处理器及其他对称多处理系统。她是一个在线程池模式的基础上执行的并发任务。在Mac OS X 10.6 雪豹中首次推出，也可在iOS 4及以上版本使用。
 
