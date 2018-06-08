@@ -13,6 +13,7 @@
 		63E55E0A2091CECF00C53487 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 63E55E092091CECF00C53487 /* Assets.xcassets */; };
 		63E55E0D2091CECF00C53487 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 63E55E0B2091CECF00C53487 /* LaunchScreen.storyboard */; };
 		63E55E102091CECF00C53487 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 63E55E0F2091CECF00C53487 /* main.m */; };
+		63E55E172091D43200C53487 /* 001.png in Resources */ = {isa = PBXBuildFile; fileRef = 63E55E162091D43200C53487 /* 001.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,7 @@
 		63E55E0C2091CECF00C53487 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		63E55E0E2091CECF00C53487 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		63E55E0F2091CECF00C53487 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		63E55E162091D43200C53487 /* 001.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 001.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +60,7 @@
 		63E55DFF2091CECF00C53487 /* UIPerformance */ = {
 			isa = PBXGroup;
 			children = (
+				63E55E162091D43200C53487 /* 001.png */,
 				63E55E002091CECF00C53487 /* AppDelegate.h */,
 				63E55E012091CECF00C53487 /* AppDelegate.m */,
 				63E55E032091CECF00C53487 /* ViewController.h */,
@@ -132,6 +135,7 @@
 				63E55E0D2091CECF00C53487 /* LaunchScreen.storyboard in Resources */,
 				63E55E0A2091CECF00C53487 /* Assets.xcassets in Resources */,
 				63E55E082091CECF00C53487 /* Main.storyboard in Resources */,
+				63E55E172091D43200C53487 /* 001.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -282,7 +286,7 @@
 				DEVELOPMENT_TEAM = 33K3DU6932;
 				INFOPLIST_FILE = UIPerformance/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.houmanager.UIPerformance;
+				PRODUCT_BUNDLE_IDENTIFIER = com.houmanager.de;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -296,7 +300,7 @@
 				DEVELOPMENT_TEAM = 33K3DU6932;
 				INFOPLIST_FILE = UIPerformance/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.houmanager.UIPerformance;
+				PRODUCT_BUNDLE_IDENTIFIER = com.houmanager.de;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
