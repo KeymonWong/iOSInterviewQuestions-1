@@ -1,41 +1,24 @@
 
 序号  | Action | Author | Description | 描述 | 注意事项
 ---- | ------ | ------ | ------------ | --- | ---
-1    | increment_build_number | KrauseFx | Increment the build number of your | 增加build版本号 | 需要先配置build setting
+001 | adb | hjanuschka | Run ADB Actions | 安卓adb | 无
+002 | adb_devices | hjanuschka | Get an array of Connected android device serials | 获取所有连接的安卓设备device serials | 无
+003 | add_extra_platforms | lacostej | Modify the default list of supported platforms | 无 | 无
+004 | add_git_tag | Multiple | This will add an annotated git tag to the current branch | 当前分支打tag | 无
+005 | app_store_build_number | hjanuschka | Returns the current build_number of either live or edit version | 无 | 无
+006 | appaloosa | Appaloosa | Upload your app to Appaloosa Store | 上传到Appaloosa | 付费
+007 | appetize | Multiple | Upload your app to Appetize.io to stream it in the browser | 无 | 无
+008 | appetize_viewing_url_generator | KrauseFx | Generate an URL for appetize simulator | 在浏览器查看Native | 无
+009 | appium | yonekawa | Run UI test by Appium with RSpec | UI 测试 | 无
+010 | appledoc | alexmx | Generate Apple-like source code | 没懂 | 无
+
+0001 | cocoapods | Multiple | Runs `pod install` for the project | pod 安装不是uodate | 无
+002 | deliver | KrauseFx | Alias for the `upload_to_app_store` action | `upload_to_app_store` 的别名 | 无
+0002 | gym | KrauseFx | Alias for the `build_ios_app` action | `build_ios_app` 的别名 | 无
+0002 | increment_build_number | KrauseFx | Increment the build number of your | 增加build版本号 | 需要先配置build setting
+0003 | testflight | ldl | Alias for the `upload_to_testflight` action | `upload_to_testflight` 的别名 | 无
 
 
-
-
-+------------------------+------------------------+------------------+
-|                     Available fastlane actions                     |
-+------------------------+------------------------+------------------+
-| Action                 | Description            | Author           |
-+------------------------+------------------------+------------------+
-| adb                    | Run ADB Actions        | hjanuschka       |
-| adb_devices            | Get an array of        | hjanuschka       |
-|                        | Connected android      |                  |
-|                        | device serials         |                  |
-| add_extra_platforms    | Modify the default     | lacostej         |
-|                        | list of supported      |                  |
-|                        | platforms              |                  |
-| add_git_tag            | This will add an       | Multiple         |
-|                        | annotated git tag to   |                  |
-|                        | the current branch     |                  |
-| app_store_build_numbe  | Returns the current    | hjanuschka       |
-| r                      | build_number of        |                  |
-|                        | either live or edit    |                  |
-|                        | version                |                  |
-| appaloosa              | Upload your app to     | Appaloosa        |
-|                        | Appaloosa Store        |                  |
-| appetize               | Upload your app to     | Multiple         |
-|                        | Appetize.io to stream  |                  |
-|                        | it in the browser      |                  |
-| appetize_viewing_url_  | Generate an URL for    | KrauseFx         |
-| generator              | appetize simulator     |                  |
-| appium                 | Run UI test by Appium  | yonekawa         |
-|                        | with RSpec             |                  |
-| appledoc               | Generate Apple-like    | alexmx           |
-|                        | source code            |                  |
 |                        | documentation from     |                  |
 |                        | the source code        |                  |
 | appstore               | Alias for the          | KrauseFx         |
@@ -112,7 +95,7 @@
 |                        | Count that can be      |                  |
 |                        | read by Jenkins (xml   |                  |
 |                        | format)                |                  |
-| cocoapods              | Runs `pod install`     | Multiple         |
+| --cocoapods              | Runs `pod install`     | Multiple         |
 |                        | for the project        |                  |
 | commit_github_file     | This will commit a     | tommeier         |
 |                        | file directly on       |                  |
@@ -148,7 +131,7 @@
 | delete_keychain        | Delete keychains and   | Multiple         |
 |                        | remove them from the   |                  |
 |                        | search list            |                  |
-| deliver                | Alias for the          | KrauseFx         |
+| --deliver                | Alias for the          | KrauseFx         |
 |                        | `upload_to_app_store`  |                  |
 |                        | action                 |                  |
 | deploygate             | Upload a new build to  | Multiple         |
@@ -266,7 +249,7 @@
 |                        | actions, including     |                  |
 |                        | building and testing   |                  |
 |                        | your Android app       |                  |
-| gym                    | Alias for the          | KrauseFx         |
+| --gym                    | Alias for the          | KrauseFx         |
 |                        | `build_ios_app`        |                  |
 |                        | action                 |                  |
 | hg_add_tag             | This will add a hg     | sjrmanning       |
@@ -531,7 +514,7 @@
 |                        | its name               |                  |
 | testfairy              | Upload a new build to  | Multiple         |
 |                        | TestFairy              |                  |
-| testflight             | Alias for the          | KrauseFx         |
+| --testflight             | Alias for the          | KrauseFx         |
 |                        | `upload_to_testflight  |                  |
 |                        | ` action               |                  |
 | tryouts                | Upload a new build to  | alicertel        |
