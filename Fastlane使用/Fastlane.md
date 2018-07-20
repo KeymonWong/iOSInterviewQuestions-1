@@ -1,7 +1,7 @@
 
-序号 | Action | Author | Description | 描述 | 注意事项
----- | --- | --- | --- | --- | --- | ---
-     | increment_build_number | KrauseFx | Increment the build number of your | 增加build版本号 | 需要先配置build setting
+序号  | Action | Author | Description | 描述 | 注意事项
+---- | ------ | ------ | ------------ | --- | ---
+1    | increment_build_number | KrauseFx | Increment the build number of your | 增加build版本号 | 需要先配置build setting
 
 
 
