@@ -1,3 +1,22 @@
+## 举例
+desc "打包到pgy"
+lane :test do |options|
+gym(
+  clean:true, #打包前clean项目
+  export_method: "ad-hoc", #导出方式
+  scheme:"shangshaban", #scheme
+  configuration: "Debug",#环境
+  output_directory:"./app",#ipa的存放目录
+  output_name:get_build_number()#输出ipa的文件名为当前的build号
+  )
+#蒲公英的配置 替换为自己的api_key和user_key
+pgyer(api_key: "xxxxxxx", user_key: "xxxxxx",update_description: options[:desc])
+end
+
+## 注意
+
+skip_metadata:true, #不上传元数据 skip_screenshots:true,#不上传屏幕截图
+
 
 序号  | Action | Author | Description | 描述 | 注意事项
 ---- | ------ | ------ | ------------ | --- | ---
