@@ -746,10 +746,13 @@ dispatch_group_leave 标志着一个任务离开了 group，执行一次，相�
 GCD 中的信号量是指 Dispatch Semaphore，是持有计数的信号。类似于过高速路收费站的栏杆。可以通过时，打开栏杆，不可以通过时，关闭栏杆。在 Dispatch Semaphore 中，使用计数来完成这个功能，计数为0时等待，不可通过。计数为1或大于1时，计数减1且不等待，可通过。Dispatch Semaphore 提供了三个函数。
 
 - dispatch_semaphore_create：创建一个Semaphore并初始化信号的总量
+如： dispatch_semaphore_t  semaphore = dispatch_semaphore_create(2);  
 
 - dispatch_semaphore_signal：发送一个信号，让信号总量加1
+如果有其他进程因等待sv而被挂起，就让它恢复运行，如果没有进程因等待sv而挂起，就给它加1.
 
 - dispatch_semaphore_wait：可以使总信号量减1，当信号总量为0时就会一直等待（阻塞所在线程），否则就可以正常执行。
+(如果sv的值大于零，就给它减1；如果它的值为零，就挂起该进程的执行)
 
 注意：信号量的使用前提是：想清楚你需要处理哪个线程等待（阻塞），又要哪个线程继续执行，然后使用信号量。
 
